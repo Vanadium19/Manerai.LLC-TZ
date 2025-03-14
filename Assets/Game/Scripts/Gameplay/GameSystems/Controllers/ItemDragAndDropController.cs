@@ -46,7 +46,7 @@ namespace Game.GameSystems.Controllers
         {
             Vector3 newPosition = _camera.ScreenToWorldPoint(new Vector3(position.x, position.y, _depth));
 
-            _item.SetPosition(newPosition);
+            _item.SetPositionForced(newPosition);
         }
     }
 }

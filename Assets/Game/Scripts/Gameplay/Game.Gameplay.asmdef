@@ -1,4 +1,18 @@
 {
-	"name": "Game.Gameplay",
-	"references":[ "Zenject" ]
+    "name": "Game.Gameplay",
+    "rootNamespace": "",
+    "references": [
+        "Zenject",
+        "Game.Modules.Entities",
+        "Game.Common"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

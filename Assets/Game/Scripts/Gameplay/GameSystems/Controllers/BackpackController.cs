@@ -7,7 +7,6 @@ namespace Game.GameSystems.Controllers
     {
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log("OnPointerDown");
         }
 
         public void OnPointerUp(PointerEventData eventData)

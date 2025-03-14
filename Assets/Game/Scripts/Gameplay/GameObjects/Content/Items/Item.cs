@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using Game.Common;
+using UnityEngine;
 
 namespace Game.GameObjects.Content.Items
 {
@@ -8,6 +10,10 @@ namespace Game.GameObjects.Content.Items
         private readonly Rigidbody _rigidbody;
         private readonly ItemConfig _config;
 
+        private bool _isFalling;
+
+        public event Action<IItem> Dropped;
+
         public Item(Transform transform, Rigidbody rigidbody, ItemConfig config)
         {
             _transform = transform;
@@ -15,19 +21,32 @@ namespace Game.GameObjects.Content.Items
             _config = config;
         }
 
+        public bool IsFalling => _isFalling;
+        public ItemType ItemType => _config.Type;
+
+        public void Enable(bool value)
+        {
+            _transform.gameObject.SetActive(value);
+            _rigidbody.isKinematic = true;
+            _isFalling = false;
+        }
+
         public void PickUp()
         {
+            _isFalling = false;
             _rigidbody.isKinematic = true;
         }
 
-        public void SetPosition(Vector3 position)
+        public void SetPositionForced(Vector3 position)
         {
             _transform.position = position;
         }
 
         public void Drop()
         {
+            _isFalling = true;
             _rigidbody.isKinematic = false;
+            Dropped?.Invoke(this);
         }
     }
 }

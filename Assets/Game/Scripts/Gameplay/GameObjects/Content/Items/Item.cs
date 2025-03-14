@@ -6,11 +6,13 @@ namespace Game.GameObjects.Content.Items
     {
         private readonly Transform _transform;
         private readonly Rigidbody _rigidbody;
+        private readonly ItemConfig _config;
 
-        public Item(Transform transform, Rigidbody rigidbody)
+        public Item(Transform transform, Rigidbody rigidbody, ItemConfig config)
         {
             _transform = transform;
             _rigidbody = rigidbody;
+            _config = config;
         }
 
         public void PickUp()

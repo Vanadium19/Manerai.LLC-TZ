@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.GameObjects.Content.Items;
 using Game.GameSystems.Inputs;
 using R3;
 using UnityEngine;
@@ -11,20 +12,23 @@ namespace Game.GameSystems.Controllers
     {
         private IMousePosition _mousePosition;
         private IDisposable _disposable;
+        private IItem _item;
 
         private Camera _camera;
         private float _depth;
 
         [Inject]
-        public void Construct(IMousePosition mousePosition)
+        public void Construct(IMousePosition mousePosition, IItem item, Transform itemTransform)
         {
-            _mousePosition = mousePosition;
+            _item = item;
             _camera = Camera.main;
-            _depth = transform.position.z - _camera.transform.position.z;
+            _mousePosition = mousePosition;
+            _depth = itemTransform.position.z - _camera.transform.position.z;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            _item.PickUp();
             _disposable = _mousePosition.Value.Subscribe(SetItemPosition);
         }
 
@@ -34,14 +38,15 @@ namespace Game.GameSystems.Controllers
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            _item.Drop();
             _disposable?.Dispose();
         }
 
         private void SetItemPosition(Vector3 position)
         {
-            var newPosition = _camera.ScreenToWorldPoint(new Vector3(position.x, position.y, _depth));
+            Vector3 newPosition = _camera.ScreenToWorldPoint(new Vector3(position.x, position.y, _depth));
 
-            transform.position = newPosition;
+            _item.SetPosition(newPosition);
         }
     }
 }

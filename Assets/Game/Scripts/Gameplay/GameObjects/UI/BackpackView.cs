@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.GameObjects.Content.UI
+namespace Game.GameObjects.UI
 {
     public class BackpackView : MonoBehaviour
     {

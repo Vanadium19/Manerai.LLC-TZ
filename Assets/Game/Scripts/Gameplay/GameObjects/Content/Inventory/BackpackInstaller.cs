@@ -1,4 +1,4 @@
-﻿using Game.GameObjects.Content.UI;
+﻿using Game.GameObjects.UI;
 using UnityEngine;
 using Zenject;
 

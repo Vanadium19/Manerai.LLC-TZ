@@ -3,7 +3,7 @@ using Game.GameObjects.Content.Inventory;
 using R3;
 using Zenject;
 
-namespace Game.GameObjects.Content.UI
+namespace Game.GameObjects.UI
 {
     public class BackpackPresenter : IInitializable, IDisposable
     {

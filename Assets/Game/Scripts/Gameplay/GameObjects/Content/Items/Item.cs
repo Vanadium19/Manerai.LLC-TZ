@@ -31,20 +31,22 @@ namespace Game.GameObjects.Content.Items
             _isFalling = false;
         }
 
-        public void PickUp()
+        public void PickUp(Transform parent)
         {
             _isFalling = false;
+            _transform.SetParent(parent);
             _rigidbody.isKinematic = true;
         }
 
-        public void SetPositionForced(Vector3 position)
-        {
-            _transform.position = position;
-        }
+        // public void SetPositionForced(Vector3 position)
+        // {
+        //     _transform.position = position;
+        // }
 
         public void Drop()
         {
             _isFalling = true;
+            _transform.SetParent(null);
             _rigidbody.isKinematic = false;
             Dropped?.Invoke(this);
         }

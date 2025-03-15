@@ -1,6 +1,6 @@
 ﻿using System;
+using Game.GameObjects.Content.Handle;
 using Game.GameObjects.Content.Items;
-using Game.GameSystems.Inputs;
 using R3;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,26 +10,20 @@ namespace Game.GameSystems.Controllers
 {
     public class ItemDragAndDropController : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        private IMousePosition _mousePosition;
+        private IHandle _handle;
         private IDisposable _disposable;
         private IItem _item;
 
-        private Camera _camera;
-        private float _depth;
-
         [Inject]
-        public void Construct(IMousePosition mousePosition, IItem item, Transform itemTransform)
+        public void Construct(IHandle handle, IItem item)
         {
             _item = item;
-            _camera = Camera.main;
-            _mousePosition = mousePosition;
-            _depth = itemTransform.position.z - _camera.transform.position.z;
+            _handle = handle;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _item.PickUp();
-            _disposable = _mousePosition.Value.Subscribe(SetItemPosition);
+            _item.PickUp(_handle.Point);
         }
 
         public void OnDrag(PointerEventData eventData)
@@ -39,14 +33,6 @@ namespace Game.GameSystems.Controllers
         public void OnEndDrag(PointerEventData eventData)
         {
             _item.Drop();
-            _disposable?.Dispose();
-        }
-
-        private void SetItemPosition(Vector3 position)
-        {
-            Vector3 newPosition = _camera.ScreenToWorldPoint(new Vector3(position.x, position.y, _depth));
-
-            _item.SetPositionForced(newPosition);
         }
     }
 }

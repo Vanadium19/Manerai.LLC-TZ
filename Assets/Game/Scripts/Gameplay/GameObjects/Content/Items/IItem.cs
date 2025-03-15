@@ -12,8 +12,7 @@ namespace Game.GameObjects.Content.Items
         public ItemType ItemType { get; }
 
         public void Enable(bool value);
-        public void PickUp();
-        public void SetPositionForced(Vector3 position);
+        public void PickUp(Transform parent);
         public void Drop();
     }
 }

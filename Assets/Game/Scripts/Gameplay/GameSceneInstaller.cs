@@ -9,14 +9,15 @@ namespace Game.Scripts.Gameplay
 {
     public class GameSceneInstaller : MonoInstaller
     {
-        [SerializeField] private Transform _handle;
+        [Header("Handle")] [SerializeField] private Transform _handle;
+        [SerializeField] private float _minPositionY = -0.55f;
 
-        [SerializeField] private ItemSlot _itemSlotPrefab;
+        [Header("UI")] [SerializeField] private ItemSlot _itemSlotPrefab;
         [SerializeField] private Transform _slotsContainer;
 
         public override void InstallBindings()
         {
-            HandleInstaller.Install(Container, _handle);
+            HandleInstaller.Install(Container, _handle, _minPositionY);
             GameSystemsInstaller.Install(Container);
             SlotFactoryInstaller.Install(Container, _itemSlotPrefab, _slotsContainer);
         }

@@ -1,4 +1,6 @@
-﻿using Game.GameObjects.UI;
+﻿using System.Linq;
+using Game.Common;
+using Game.GameObjects.UI;
 using UnityEngine;
 using Zenject;
 
@@ -11,6 +13,12 @@ namespace Game.GameObjects.Content.Inventory
 
         public override void InstallBindings()
         {
+            ItemType[] itemTypes = _params.Select(item => item.ItemType).ToArray();
+
+            Container.Bind<ItemType[]>()
+                .FromInstance(itemTypes)
+                .AsCached();
+
             Container.BindInterfacesTo<Backpack>()
                 .AsSingle()
                 .WithArguments(_params)
@@ -22,7 +30,7 @@ namespace Game.GameObjects.Content.Inventory
 
             Container.Bind<BackpackView>()
                 .FromInstance(_view)
-                .AsCached();
+                .AsSingle();
         }
     }
 }

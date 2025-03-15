@@ -2,7 +2,8 @@
 {
     public enum ItemType
     {
-        FirstAidKit = 0,
+        None = 0,
+        FirstAidKit,
         Matches,
         Flask,
     }

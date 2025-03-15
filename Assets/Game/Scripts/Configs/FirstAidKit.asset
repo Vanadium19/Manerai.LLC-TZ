@@ -15,4 +15,4 @@ MonoBehaviour:
   _itemName: FirstAidKit
   _id: 3
   _weight: 5
-  _type: 0
+  _type: 1

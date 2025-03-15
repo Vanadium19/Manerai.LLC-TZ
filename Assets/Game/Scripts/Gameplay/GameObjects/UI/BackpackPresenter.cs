@@ -20,7 +20,12 @@ namespace Game.GameObjects.UI
 
         public void Initialize()
         {
-            _disposable = _backpack.IsOpen.Subscribe(_view.OpenBackpack);
+            DisposableBuilder builder = Disposable.CreateBuilder();
+
+            _backpack.IsOpen.Subscribe(_view.OpenBackpack).AddTo(ref builder);
+            _view.SelectedItem.Subscribe(_backpack.SelectItem).AddTo(ref builder);
+
+            _disposable = builder.Build();
         }
 
         public void Dispose()

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.Common;
+using Game.GameObjects.Content.Handle;
 using Game.GameObjects.Content.Items;
 using R3;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Game.GameObjects.Content.Inventory
         private readonly Dictionary<ItemType, Stack<IItem>> _items;
 
         private readonly ReactiveProperty<bool> _openCommand = new();
+
+        private ItemType _selectedItem;
 
         public Backpack(ItemBackpackParams[] backpackParams)
         {
@@ -46,16 +49,28 @@ namespace Game.GameObjects.Content.Inventory
             _items[item.ItemType].Push(item);
         }
 
-        public void RemoveItem(ItemType itemType)
+        public bool TryGetItem(out IItem item)
         {
-            if (_items[itemType].Count == 0)
-                return;
+            item = null;
 
-            IItem item = _items[itemType].Pop();
+            if (_selectedItem == ItemType.None)
+                return false;
+
+            if (_items[_selectedItem].Count == 0)
+                return false;
+
+            item = _items[_selectedItem].Pop();
             item.Enable(true);
 
             if (_items[item.ItemType].Count == 0)
-                _itemsPositions[itemType].gameObject.SetActive(false);
+                _itemsPositions[_selectedItem].gameObject.SetActive(false);
+
+            return true;
+        }
+
+        public void SelectItem(ItemType itemType)
+        {
+            _selectedItem = itemType;
         }
     }
 }

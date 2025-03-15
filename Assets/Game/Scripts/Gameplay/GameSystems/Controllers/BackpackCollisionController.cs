@@ -20,8 +20,6 @@ namespace Game.GameSystems.Controllers
         {
             if (other.TryGetComponent(out IEntity entity) && entity.TryGet(out IItem item))
             {
-                Debug.Log("Item entered backpack trigger");
-
                 if (item.IsFalling)
                     _backpack.AddItem(item);
                 else
@@ -33,8 +31,6 @@ namespace Game.GameSystems.Controllers
         {
             if (other.TryGetComponent(out IEntity entity) && entity.TryGet(out IItem item))
             {
-                Debug.Log("Item exited backpack trigger");
-
                 item.Dropped -= OnItemDropped;
             }
         }

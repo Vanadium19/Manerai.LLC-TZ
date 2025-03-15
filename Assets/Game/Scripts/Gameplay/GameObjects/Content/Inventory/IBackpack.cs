@@ -11,6 +11,7 @@ namespace Game.GameObjects.Content.Inventory
         public void Open();
         public void Close();
         public void AddItem(IItem item);
-        public void RemoveItem(ItemType itemType);
+        public bool TryGetItem(out IItem item);
+        public void SelectItem(ItemType itemType);
     }
 }

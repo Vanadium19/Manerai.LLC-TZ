@@ -35,6 +35,7 @@ namespace Game.GameObjects.Content.Items
         {
             _isFalling = false;
             _transform.SetParent(parent);
+            _transform.localPosition = Vector3.zero; //убрать
             _rigidbody.isKinematic = true;
         }
 

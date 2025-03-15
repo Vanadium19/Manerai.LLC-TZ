@@ -1,5 +1,4 @@
-﻿using System;
-using Game.GameObjects.Content.Inventory;
+﻿using Game.GameObjects.Content.Inventory;
 using Game.GameObjects.Content.Items;
 using Game.Modules.Entities;
 using UnityEngine;

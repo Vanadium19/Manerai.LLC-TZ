@@ -2,6 +2,7 @@
 using System.Linq;
 using Game.Common;
 using Game.GameObjects.Content.Items;
+using R3;
 using UnityEngine;
 
 namespace Game.GameObjects.Content.Inventory
@@ -11,6 +12,8 @@ namespace Game.GameObjects.Content.Inventory
         private readonly Dictionary<ItemType, Transform> _itemsPositions;
         private readonly Dictionary<ItemType, Stack<IItem>> _items;
 
+        private readonly ReactiveProperty<bool> _openCommand = new();
+
         public Backpack(ItemBackpackParams[] backpackParams)
         {
             _itemsPositions = backpackParams.ToDictionary(item => item.ItemType, item => item.Transform);
@@ -19,6 +22,18 @@ namespace Game.GameObjects.Content.Inventory
 
             foreach (var key in _itemsPositions.Keys)
                 _items[key] = new Stack<IItem>();
+        }
+
+        public ReadOnlyReactiveProperty<bool> IsOpen => _openCommand;
+
+        public void Open()
+        {
+            _openCommand.Value = true;
+        }
+
+        public void Close()
+        {
+            _openCommand.Value = false;
         }
 
         public void AddItem(IItem item)

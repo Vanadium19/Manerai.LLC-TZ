@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.GameObjects.Content.UI;
+using UnityEngine;
 using Zenject;
 
 namespace Game.GameObjects.Content.Inventory
@@ -6,6 +7,7 @@ namespace Game.GameObjects.Content.Inventory
     public class BackpackInstaller : MonoInstaller
     {
         [SerializeField] private ItemBackpackParams[] _params;
+        [SerializeField] private BackpackView _view;
 
         public override void InstallBindings()
         {
@@ -13,6 +15,14 @@ namespace Game.GameObjects.Content.Inventory
                 .AsSingle()
                 .WithArguments(_params)
                 .NonLazy();
+
+            Container.BindInterfacesTo<BackpackPresenter>()
+                .AsSingle()
+                .NonLazy();
+
+            Container.Bind<BackpackView>()
+                .FromInstance(_view)
+                .AsCached();
         }
     }
 }

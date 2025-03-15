@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using Game.Common;
 using Game.GameObjects.Content.Items;
-using Game.Scripts.App;
 using R3;
 using UnityEngine;
 using UnityEngine.Events;

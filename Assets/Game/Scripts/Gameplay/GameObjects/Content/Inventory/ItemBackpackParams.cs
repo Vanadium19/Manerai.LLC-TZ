@@ -1,8 +1,6 @@
 ﻿using System;
-using Game.Common;
 using Game.GameObjects.Content.Items;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game.GameObjects.Content.Inventory
 {

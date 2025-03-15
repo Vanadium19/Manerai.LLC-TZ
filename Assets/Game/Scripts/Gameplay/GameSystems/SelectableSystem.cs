@@ -1,8 +1,5 @@
-﻿using Game.Common;
-using Game.GameObjects.Content.Handle;
+﻿using Game.GameObjects.Content.Handle;
 using Game.GameObjects.Content.Items;
-using UnityEngine;
-using Zenject;
 
 namespace Game.Scripts.Gameplay.GameSystems
 {

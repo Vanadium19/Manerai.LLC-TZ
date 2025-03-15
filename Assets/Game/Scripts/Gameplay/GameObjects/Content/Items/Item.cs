@@ -1,7 +1,5 @@
 ﻿using System;
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
 using Game.Common;
 using UnityEngine;
 
@@ -17,8 +15,6 @@ namespace Game.GameObjects.Content.Items
 
         private bool _isMoving;
         private Tween _moveTween;
-
-        public event Action<IItem> Dropped;
 
         public Item(Transform transform, Rigidbody rigidbody, ItemConfig config)
         {
@@ -68,7 +64,6 @@ namespace Game.GameObjects.Content.Items
             _moveTween?.Kill();
             _transform.SetParent(null);
             _rigidbody.isKinematic = false;
-            Dropped?.Invoke(this);
         }
     }
 }

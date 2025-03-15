@@ -2,7 +2,6 @@
 using Game.GameObjects.UI;
 using Game.Scripts.Gameplay.GameSystems;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Game.Scripts.Gameplay
@@ -17,8 +16,13 @@ namespace Game.Scripts.Gameplay
 
         public override void InstallBindings()
         {
+            //Content
             HandleInstaller.Install(Container, _handle, _minPositionY);
+
+            //System
             GameSystemsInstaller.Install(Container);
+
+            //UI
             SlotFactoryInstaller.Install(Container, _itemSlotPrefab, _slotsContainer);
         }
     }

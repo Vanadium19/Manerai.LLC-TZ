@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using Game.GameObjects.Content.Items;
+﻿using Game.GameObjects.Content.Items;
 
 namespace Game.Scripts.Gameplay.GameSystems
 {

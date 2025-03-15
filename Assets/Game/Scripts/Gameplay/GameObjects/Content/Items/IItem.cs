@@ -6,8 +6,6 @@ namespace Game.GameObjects.Content.Items
 {
     public interface IItem
     {
-        public event Action<IItem> Dropped;
-
         public bool IsMoving { get; }
         public ItemType ItemType { get; }
         public int Id { get; }

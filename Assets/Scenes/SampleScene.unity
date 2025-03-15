@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 422374956}
   - component: {fileID: 422374955}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: '[Canvas]'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -938,6 +938,18 @@ PrefabInstance:
       propertyPath: _backpackPanel
       value: 
       objectReference: {fileID: 1412879935}
+    - target: {fileID: 6260842578311017142, guid: fe6ffafe6ecfdaa45bbca67f92591a31, type: 3}
+      propertyPath: _params.Array.data[0]._itemConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 703b78795072e144ea16d3fad76cff9b, type: 2}
+    - target: {fileID: 6260842578311017142, guid: fe6ffafe6ecfdaa45bbca67f92591a31, type: 3}
+      propertyPath: _params.Array.data[1]._itemConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 928a8c203ea8428459d7fbcfdd202e66, type: 2}
+    - target: {fileID: 6260842578311017142, guid: fe6ffafe6ecfdaa45bbca67f92591a31, type: 3}
+      propertyPath: _params.Array.data[2]._itemConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 0fdad17433929ce49957ad061e1698d7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

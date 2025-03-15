@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Common;
 using Game.GameObjects.Content.Inventory;
 using R3;
 using Zenject;
@@ -22,7 +23,9 @@ namespace Game.GameObjects.UI
         {
             DisposableBuilder builder = Disposable.CreateBuilder();
 
-            _backpack.IsOpen.Subscribe(_view.OpenBackpack).AddTo(ref builder);
+            _backpack.IsOpenObservable.Subscribe(_view.OpenBackpack).AddTo(ref builder);
+
+            _backpack.ShowItemObservable.Subscribe(EnableSlot).AddTo(ref builder);
             _view.SelectedItem.Subscribe(_backpack.SelectItem).AddTo(ref builder);
 
             _disposable = builder.Build();
@@ -31,6 +34,11 @@ namespace Game.GameObjects.UI
         public void Dispose()
         {
             _disposable.Dispose();
+        }
+
+        private void EnableSlot((ItemType type, bool value) info)
+        {
+            _view.EnableSlot(info.type, info.value);
         }
     }
 }

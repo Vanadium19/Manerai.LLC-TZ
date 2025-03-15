@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Game.Common;
+using Game.GameObjects.Content.Items;
 using Game.GameObjects.UI;
 using UnityEngine;
 using Zenject;
@@ -13,10 +14,10 @@ namespace Game.GameObjects.Content.Inventory
 
         public override void InstallBindings()
         {
-            ItemType[] itemTypes = _params.Select(item => item.ItemType).ToArray();
+            ItemConfig[] itemTypes = _params.Select(item => item.Config).ToArray();
 
             //Main
-            Container.Bind<ItemType[]>()
+            Container.Bind<ItemConfig[]>()
                 .FromInstance(itemTypes)
                 .AsCached();
 

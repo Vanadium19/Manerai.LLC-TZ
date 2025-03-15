@@ -17,7 +17,7 @@ namespace Game.GameObjects.UI
 
         public override void InstallBindings()
         {
-            Container.BindFactory<ItemType, ItemSlot, ItemSlotFactory>()
+            Container.BindFactory<ItemType, Sprite, ItemSlot, ItemSlotFactory>()
                 .FromComponentInNewPrefab(_prefab)
                 .WithGameObjectName(nameof(ItemSlot))
                 .UnderTransform(_container)

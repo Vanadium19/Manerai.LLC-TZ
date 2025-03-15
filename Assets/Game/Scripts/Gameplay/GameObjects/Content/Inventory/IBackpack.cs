@@ -10,7 +10,8 @@ namespace Game.GameObjects.Content.Inventory
         public event UnityAction<int, string> ItemGot;
         public event UnityAction<int, string> ItemPut;
 
-        public ReadOnlyReactiveProperty<bool> IsOpen { get; }
+        public ReadOnlyReactiveProperty<bool> IsOpenObservable { get; }
+        public Observable<(ItemType, bool)> ShowItemObservable { get; }
 
         public void Open(bool value);
         public void AddItem(IItem item);

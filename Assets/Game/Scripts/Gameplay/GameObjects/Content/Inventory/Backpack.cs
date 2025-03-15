@@ -19,6 +19,7 @@ namespace Game.GameObjects.Content.Inventory
         private readonly Dictionary<ItemType, Stack<IItem>> _items;
 
         private readonly ReactiveProperty<bool> _openCommand = new();
+        private readonly Subject<(ItemType, bool)> _showItemCommand = new();
 
         private ItemType _selectedItem;
 
@@ -27,7 +28,7 @@ namespace Game.GameObjects.Content.Inventory
 
         public Backpack(ItemBackpackParams[] backpackParams)
         {
-            _itemsPositions = backpackParams.ToDictionary(item => item.ItemType, item => item.Transform);
+            _itemsPositions = backpackParams.ToDictionary(item => item.Config.Type, item => item.Transform);
 
             _items = new Dictionary<ItemType, Stack<IItem>>();
 
@@ -35,7 +36,8 @@ namespace Game.GameObjects.Content.Inventory
                 _items[key] = new Stack<IItem>();
         }
 
-        public ReadOnlyReactiveProperty<bool> IsOpen => _openCommand;
+        public ReadOnlyReactiveProperty<bool> IsOpenObservable => _openCommand;
+        public Observable<(ItemType, bool)> ShowItemObservable => _showItemCommand;
 
         public void Open(bool value)
         {
@@ -68,7 +70,7 @@ namespace Game.GameObjects.Content.Inventory
             ItemGot?.Invoke(item.Id, ItemStatusGet);
 
             if (_items[item.ItemType].Count == 0)
-                _itemsPositions[_selectedItem].gameObject.SetActive(false);
+                ShowItem(_selectedItem, false);
 
             return true;
         }
@@ -81,10 +83,16 @@ namespace Game.GameObjects.Content.Inventory
             item.Enable(false);
 
             if (_items[item.ItemType].Count == 0)
-                _itemsPositions[item.ItemType].gameObject.SetActive(true);
+                ShowItem(item.ItemType, true);
 
             _items[item.ItemType].Push(item);
             ItemPut?.Invoke(item.Id, ItemStatusPut);
+        }
+
+        private void ShowItem(ItemType type, bool value)
+        {
+            _itemsPositions[type].gameObject.SetActive(value);
+            _showItemCommand.OnNext((type, value));
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.Common;
+using Game.GameObjects.Content.Items;
 using R3;
 using UnityEngine;
 using Zenject;
@@ -11,22 +12,35 @@ namespace Game.GameObjects.UI
     {
         [SerializeField] private GameObject _backpackPanel;
 
+        private ItemSlot[] _slots;
+
         public Observable<ItemType> SelectedItem { get; private set; }
 
         [Inject]
-        public void Construct(ItemType[] types, ItemSlotFactory factory)
+        public void Construct(ItemConfig[] types, ItemSlotFactory factory)
         {
-            ItemSlot[] slots = new ItemSlot[types.Length];
+            _slots = new ItemSlot[types.Length];
 
             for (int i = 0; i < types.Length; i++)
-                slots[i] = factory.Create(types[i]);
+                _slots[i] = factory.Create(types[i].Type, types[i].Icon);
 
-            SelectedItem = slots.Select(slot => slot.CurrentItem).Merge();
+            SelectedItem = _slots.Select(slot => slot.CurrentItem).Merge();
         }
 
         public void OpenBackpack(bool value)
         {
             _backpackPanel.SetActive(value);
+        }
+
+        public void EnableSlot(ItemType type, bool value)
+        {
+            foreach (ItemSlot slot in _slots)
+            {
+                if (slot.SlotType == type)
+                {
+                    slot.gameObject.SetActive(value);
+                }
+            }
         }
     }
 }

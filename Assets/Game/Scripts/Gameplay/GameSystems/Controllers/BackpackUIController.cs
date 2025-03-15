@@ -24,7 +24,7 @@ namespace Game.GameSystems.Controllers
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            _backpack.Open();
+            _backpack.Open(true);
         }
 
         public void OnPointerUp(PointerEventData eventData)
@@ -32,7 +32,7 @@ namespace Game.GameSystems.Controllers
             if (_backpack.TryGetItem(out IItem item))
                 item.SetPosition(_handle.Point.position, () => _selectableSystem.SelectItem(item));
 
-            _backpack.Close();
+            _backpack.Open(false);
         }
     }
 }

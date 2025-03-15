@@ -15,7 +15,7 @@ namespace Game.GameObjects.Content.Items
         private readonly Rigidbody _rigidbody;
         private readonly ItemConfig _config;
 
-        private bool _isFalling;
+        private bool _isMoving;
         private Tween _moveTween;
 
         public event Action<IItem> Dropped;
@@ -27,19 +27,23 @@ namespace Game.GameObjects.Content.Items
             _config = config;
         }
 
-        public bool IsFalling => _isFalling;
+        public bool IsMoving => _isMoving;
         public ItemType ItemType => _config.Type;
+        public int Id => _config.Id;
 
         public void Enable(bool value)
         {
             _transform.gameObject.SetActive(value);
             _rigidbody.isKinematic = true;
-            _isFalling = false;
+            _isMoving = false;
         }
 
         public void PickUp(Transform parent)
         {
-            _isFalling = false;
+            if (_isMoving)
+                return;
+
+            _isMoving = true;
             _transform.SetParent(parent);
             _transform.localPosition = Vector3.zero;
             _rigidbody.isKinematic = true;
@@ -47,14 +51,20 @@ namespace Game.GameObjects.Content.Items
 
         public void SetPosition(Vector3 position, Action callback = null)
         {
+            _isMoving = true;
+
             _moveTween = _transform.DOMove(position, MoveDuration)
                 .SetEase(Ease.Linear)
-                .OnComplete(() => callback?.Invoke());
+                .OnComplete(() =>
+                {
+                    _isMoving = false;
+                    callback?.Invoke();
+                });
         }
 
         public void Drop()
         {
-            _isFalling = true;
+            _isMoving = false;
             _moveTween?.Kill();
             _transform.SetParent(null);
             _rigidbody.isKinematic = false;

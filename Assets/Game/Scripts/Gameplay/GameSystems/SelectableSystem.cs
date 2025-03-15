@@ -17,6 +17,8 @@ namespace Game.Scripts.Gameplay.GameSystems
             _handle = handle;
         }
 
+        public bool HasItem => _currentItem != null;
+
         public void SelectItem(IItem item)
         {
             if (_currentItem != null)

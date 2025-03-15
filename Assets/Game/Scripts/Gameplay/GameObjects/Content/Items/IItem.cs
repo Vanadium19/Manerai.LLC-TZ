@@ -8,8 +8,9 @@ namespace Game.GameObjects.Content.Items
     {
         public event Action<IItem> Dropped;
 
-        public bool IsFalling { get; }
+        public bool IsMoving { get; }
         public ItemType ItemType { get; }
+        public int Id { get; }
 
         public void Enable(bool value);
         public void PickUp(Transform parent);

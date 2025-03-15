@@ -1,21 +1,29 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Game.Common;
-using Game.GameObjects.Content.Handle;
 using Game.GameObjects.Content.Items;
+using Game.Scripts.App;
 using R3;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.GameObjects.Content.Inventory
 {
     public class Backpack : IBackpack
     {
+        private const string ItemStatusPut = "Put";
+        private const string ItemStatusGet = "Get";
+
         private readonly Dictionary<ItemType, Transform> _itemsPositions;
         private readonly Dictionary<ItemType, Stack<IItem>> _items;
 
         private readonly ReactiveProperty<bool> _openCommand = new();
 
         private ItemType _selectedItem;
+
+        public event UnityAction<int, string> ItemGot;
+        public event UnityAction<int, string> ItemPut;
 
         public Backpack(ItemBackpackParams[] backpackParams)
         {
@@ -29,32 +37,19 @@ namespace Game.GameObjects.Content.Inventory
 
         public ReadOnlyReactiveProperty<bool> IsOpen => _openCommand;
 
-        public void Open()
+        public void Open(bool value)
         {
             _openCommand.Value = true;
         }
 
-        public void Close()
+        public void SelectItem(ItemType itemType)
         {
-            _openCommand.Value = false;
+            _selectedItem = itemType;
         }
 
         public void AddItem(IItem item)
         {
             item.SetPosition(_itemsPositions[item.ItemType].position, () => Put(item));
-        }
-
-        private void Put(IItem item)
-        {
-            if (_items[item.ItemType].Contains(item))
-                return;
-
-            item.Enable(false);
-
-            if (_items[item.ItemType].Count == 0)
-                _itemsPositions[item.ItemType].gameObject.SetActive(true);
-
-            _items[item.ItemType].Push(item);
         }
 
         public bool TryGetItem(out IItem item)
@@ -68,7 +63,9 @@ namespace Game.GameObjects.Content.Inventory
                 return false;
 
             item = _items[_selectedItem].Pop();
+
             item.Enable(true);
+            ItemGot?.Invoke(item.Id, ItemStatusGet);
 
             if (_items[item.ItemType].Count == 0)
                 _itemsPositions[_selectedItem].gameObject.SetActive(false);
@@ -76,9 +73,18 @@ namespace Game.GameObjects.Content.Inventory
             return true;
         }
 
-        public void SelectItem(ItemType itemType)
+        private void Put(IItem item)
         {
-            _selectedItem = itemType;
+            if (_items[item.ItemType].Contains(item))
+                return;
+
+            item.Enable(false);
+
+            if (_items[item.ItemType].Count == 0)
+                _itemsPositions[item.ItemType].gameObject.SetActive(true);
+
+            _items[item.ItemType].Push(item);
+            ItemPut?.Invoke(item.Id, ItemStatusPut);
         }
     }
 }

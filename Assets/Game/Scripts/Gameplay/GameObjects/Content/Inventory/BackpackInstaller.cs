@@ -15,6 +15,7 @@ namespace Game.GameObjects.Content.Inventory
         {
             ItemType[] itemTypes = _params.Select(item => item.ItemType).ToArray();
 
+            //Main
             Container.Bind<ItemType[]>()
                 .FromInstance(itemTypes)
                 .AsCached();
@@ -24,10 +25,16 @@ namespace Game.GameObjects.Content.Inventory
                 .WithArguments(_params)
                 .NonLazy();
 
+            //Presenters
             Container.BindInterfacesTo<BackpackPresenter>()
                 .AsSingle()
                 .NonLazy();
 
+            Container.BindInterfacesTo<BackpackNetworkPresenter>()
+                .AsSingle()
+                .NonLazy();
+
+            //View
             Container.Bind<BackpackView>()
                 .FromInstance(_view)
                 .AsSingle();

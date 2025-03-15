@@ -1,5 +1,7 @@
 ﻿using System;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Game.Common;
 using UnityEngine;
 
@@ -14,6 +16,7 @@ namespace Game.GameObjects.Content.Items
         private readonly ItemConfig _config;
 
         private bool _isFalling;
+        private Tween _moveTween;
 
         public event Action<IItem> Dropped;
 
@@ -44,7 +47,7 @@ namespace Game.GameObjects.Content.Items
 
         public void SetPosition(Vector3 position, Action callback = null)
         {
-            _transform.DOMove(position, MoveDuration)
+            _moveTween = _transform.DOMove(position, MoveDuration)
                 .SetEase(Ease.Linear)
                 .OnComplete(() => callback?.Invoke());
         }
@@ -52,6 +55,7 @@ namespace Game.GameObjects.Content.Items
         public void Drop()
         {
             _isFalling = true;
+            _moveTween?.Kill();
             _transform.SetParent(null);
             _rigidbody.isKinematic = false;
             Dropped?.Invoke(this);

@@ -19,6 +19,12 @@ namespace Game.Scripts.Gameplay.GameSystems
 
         public void SelectItem(IItem item)
         {
+            if (_currentItem != null)
+            {
+                item.Drop();
+                return;
+            }
+
             _currentItem = item;
             _currentItem.PickUp(_handle.Point);
             // _currentItem.SetPosition(_handle.Point.position, () => _currentItem.PickUp(_handle.Point));

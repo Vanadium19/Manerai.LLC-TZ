@@ -18,6 +18,7 @@ namespace Game.Scripts.Gameplay.GameSystems
         }
 
         public bool HasItem => _currentItem != null;
+        public IItem CurrentItem => _currentItem;
 
         public void SelectItem(IItem item)
         {
@@ -29,7 +30,6 @@ namespace Game.Scripts.Gameplay.GameSystems
 
             _currentItem = item;
             _currentItem.PickUp(_handle.Point);
-            // _currentItem.SetPosition(_handle.Point.position, () => _currentItem.PickUp(_handle.Point));
         }
 
         public void DeselectItem()

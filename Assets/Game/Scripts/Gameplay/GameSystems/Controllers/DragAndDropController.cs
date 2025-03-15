@@ -1,4 +1,5 @@
-﻿using Game.GameObjects.Content.Items;
+﻿using Game.GameObjects.Content.Inventory;
+using Game.GameObjects.Content.Items;
 using Game.Modules.Entities;
 using Game.Scripts.Gameplay.GameSystems;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace Game.GameSystems.Controllers
                 SelectItem();
 
             if (Input.GetKeyUp(KeyCode.Mouse0))
-                _selectableSystem.DeselectItem();
+                DeselectItem();
         }
 
         private void SelectItem()
@@ -37,6 +38,24 @@ namespace Game.GameSystems.Controllers
                     _selectableSystem.SelectItem(item);
                 }
             }
+        }
+
+        private void DeselectItem()
+        {
+            if (!_selectableSystem.HasItem)
+                return;
+
+            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out RaycastHit hit))
+            {
+                if (hit.collider.TryGetComponent(out IEntity entity) && entity.TryGet(out IBackpack backpack))
+                {
+                    backpack.AddItem(_selectableSystem.CurrentItem);
+                }
+            }
+
+            _selectableSystem.DeselectItem();
         }
     }
 }

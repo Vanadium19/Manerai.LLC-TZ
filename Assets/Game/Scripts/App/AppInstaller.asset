@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8286c32dfb90447f816bcc37ffa18502, type: 3}
   m_Name: AppInstaller
   m_EditorClassIdentifier: 
-  _uri: EQCLfvbkTrdUJ1wfyNI9uOdcK30z1wbWWX060mrXBNwp2Tse
+  _uri: https://wadahub.manerai.com/api/inventory/status
   _token: kPERnYcWAY46xaSy8CEzanosAgsWM84Nx7SKM4QBSqPq6c7StWfGxzhxPfDh8MaP

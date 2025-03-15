@@ -39,7 +39,7 @@ namespace Game.GameObjects.Content.Inventory
 
         public void Open(bool value)
         {
-            _openCommand.Value = true;
+            _openCommand.Value = value;
         }
 
         public void SelectItem(ItemType itemType)

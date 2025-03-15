@@ -18,28 +18,11 @@ namespace Game.GameSystems.Controllers
 
         private void OnTriggerEnter(Collider other)
         {
-            // if (other.TryGetComponent(out IEntity entity) && entity.TryGet(out IItem item))
-            // {
-            //     if (!item.IsMoving)
-            //         _backpack.AddItem(item);
-            //     else
-            //         item.Dropped += OnItemDropped;
-            // }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            // if (other.TryGetComponent(out IEntity entity) && entity.TryGet(out IItem item))
-            // {
-            //     item.Dropped -= OnItemDropped;
-            // }
-        }
-
-        private void OnItemDropped(IItem item)
-        {
-            _backpack.AddItem(item);
-
-            item.Dropped -= OnItemDropped;
+            if (other.TryGetComponent(out IEntity entity) && entity.TryGet(out IItem item))
+            {
+                if (!item.IsMoving)
+                    _backpack.AddItem(item);
+            }
         }
     }
 }

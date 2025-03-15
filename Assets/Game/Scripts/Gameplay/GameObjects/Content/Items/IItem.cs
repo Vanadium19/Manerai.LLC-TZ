@@ -13,6 +13,7 @@ namespace Game.GameObjects.Content.Items
 
         public void Enable(bool value);
         public void PickUp(Transform parent);
+        public void SetPosition(Vector3 position, Action callback = null);
         public void Drop();
     }
 }

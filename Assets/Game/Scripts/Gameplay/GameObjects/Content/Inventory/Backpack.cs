@@ -41,6 +41,14 @@ namespace Game.GameObjects.Content.Inventory
 
         public void AddItem(IItem item)
         {
+            item.SetPosition(_itemsPositions[item.ItemType].position, () => Put(item));
+        }
+
+        private void Put(IItem item)
+        {
+            if (_items[item.ItemType].Contains(item))
+                return;
+
             item.Enable(false);
 
             if (_items[item.ItemType].Count == 0)

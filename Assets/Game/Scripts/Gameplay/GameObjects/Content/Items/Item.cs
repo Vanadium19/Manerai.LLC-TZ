@@ -1,4 +1,5 @@
 ﻿using System;
+using DG.Tweening;
 using Game.Common;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ namespace Game.GameObjects.Content.Items
 {
     public class Item : IItem
     {
+        private const float MoveDuration = 0.2f;
+
         private readonly Transform _transform;
         private readonly Rigidbody _rigidbody;
         private readonly ItemConfig _config;
@@ -35,14 +38,16 @@ namespace Game.GameObjects.Content.Items
         {
             _isFalling = false;
             _transform.SetParent(parent);
-            _transform.localPosition = Vector3.zero; //убрать
+            _transform.localPosition = Vector3.zero;
             _rigidbody.isKinematic = true;
         }
 
-        // public void SetPositionForced(Vector3 position)
-        // {
-        //     _transform.position = position;
-        // }
+        public void SetPosition(Vector3 position, Action callback = null)
+        {
+            _transform.DOMove(position, MoveDuration)
+                .SetEase(Ease.Linear)
+                .OnComplete(() => callback?.Invoke());
+        }
 
         public void Drop()
         {

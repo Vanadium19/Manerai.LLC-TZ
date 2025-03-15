@@ -21,6 +21,7 @@ namespace Game.Scripts.Gameplay.GameSystems
         {
             _currentItem = item;
             _currentItem.PickUp(_handle.Point);
+            // _currentItem.SetPosition(_handle.Point.position, () => _currentItem.PickUp(_handle.Point));
         }
 
         public void DeselectItem()
